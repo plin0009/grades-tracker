@@ -1,5 +1,7 @@
 export type RationalNumber = [number, number]
 
+type MaybeRationalNumber = RationalNumber | undefined
+
 export const RationalNumber = (
   numerator: number,
   denominator: number = 1
@@ -9,7 +11,7 @@ export const RationalNumber = (
 }
 
 export const toDecimal = (
-  rationalNumber: RationalNumber | undefined,
+  rationalNumber: MaybeRationalNumber,
   decimalPlaces: number = 1
 ): string => {
   if (rationalNumber === undefined) return ''
@@ -22,7 +24,7 @@ export const toDecimal = (
 }
 
 export const toPercentage = (
-  rationalNumber: RationalNumber | undefined,
+  rationalNumber: MaybeRationalNumber,
   decimalPlaces: number = 1
 ): string => {
   if (rationalNumber === undefined) return ''
@@ -30,10 +32,18 @@ export const toPercentage = (
 }
 
 export const add = (
-  rn1: RationalNumber | undefined,
-  rn2: RationalNumber | undefined
-): RationalNumber | undefined => {
+  rn1: MaybeRationalNumber,
+  rn2: MaybeRationalNumber
+): MaybeRationalNumber => {
   if (rn1 === undefined) return rn2
   if (rn2 === undefined) return rn1
   return RationalNumber(rn1[0] * rn2[1] + rn2[0] * rn1[1], rn1[1] * rn2[1])
+}
+
+export const multiply = (
+  rn1: MaybeRationalNumber,
+  rn2: MaybeRationalNumber
+): MaybeRationalNumber => {
+  if (rn1 === undefined || rn2 === undefined) return undefined
+  return RationalNumber(rn1[0] * rn2[0], rn1[1] * rn2[1])
 }

@@ -46,7 +46,7 @@ export const getAssessmentName = (course: Course, assessmentId: ID): string => {
     return assessment.name ?? ''
   }
   const group = course.groups[assessment.groupId]
-  const assessmentNumber = group.assessments.indexOf(assessmentId)
+  const assessmentNumber = group.assessments.indexOf(assessmentId) + 1
   if (group.prefix === undefined) {
     return assessment.name ?? ''
   }

@@ -50,19 +50,21 @@ const Home: NextPage = () => {
                           {toPercentage(getTotalWeight(course, id))}
                         </p>
                       </div>
-                      {group.assessments.map((assessmentId) => (
-                        <div
-                          key={assessmentId}
-                          className="flex w-full justify-between"
-                        >
-                          <p>{getAssessmentName(course, assessmentId)}</p>
-                          <p>
-                            {toPercentage(
-                              course.assessments[assessmentId].weight
-                            )}
-                          </p>
-                        </div>
-                      ))}
+                      <div className="pl-4">
+                        {group.assessments.map((assessmentId) => (
+                          <div
+                            key={assessmentId}
+                            className="flex w-full justify-between"
+                          >
+                            <p>{getAssessmentName(course, assessmentId)}</p>
+                            <p>
+                              {toPercentage(
+                                course.assessments[assessmentId].weight
+                              )}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   ))}
                   {course.ungrouped?.map((assessmentId) => (
