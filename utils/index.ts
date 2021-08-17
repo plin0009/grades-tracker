@@ -4,69 +4,67 @@ export interface UserState {
   courses: Course[]
 }
 
-type ID = string
+export type ID = string
 
 export interface Course {
   id: ID
   code: string
   title: string
   properties: { [key: string]: string }
+  rootAssessmentIDs: ID[]
   assessments: { [key: string]: Assessment }
-  groups: { [key: string]: AssessmentGroup }
-  ungrouped?: ID[]
   types: { [key: string]: AssessmentType }
 }
 
-export interface AssessmentGroup {
-  name: string
-  prefix?: string
-  defaultTypeIds?: ID[]
-  defaultWeight?: RationalNumber
-  totalWeight?: RationalNumber
-
-  assessments: ID[]
-}
 export interface AssessmentType {
   name: string
   colour: string
 }
 
 export interface Assessment {
+  id: ID
   name?: string
-  groupId?: ID
+  childPrefix?: string
+  //groupId?: ID
   typeIds?: ID[]
   weight?: RationalNumber
   grade?: RationalNumber
+  //parent?: Assessment
+  parentID?: ID
+  //children?: Assessment[]
+  childrenIDs?: ID[]
   // TODO: due dates
 }
 
-export const getAssessmentName = (course: Course, assessmentId: ID): string => {
-  const assessment = course.assessments[assessmentId]
-  if (assessment.groupId === undefined) {
+export const getAssessmentName = (course: Course, assessmentID: ID): string => {
+  const assessment = course.assessments[assessmentID]
+  if (assessment.parentID === undefined) {
     return assessment.name ?? ''
   }
-  const group = course.groups[assessment.groupId]
-  const assessmentNumber = group.assessments.indexOf(assessmentId) + 1
-  if (group.prefix === undefined) {
+  const assessmentParent = course.assessments[assessment.parentID]
+  const assessmentNumber =
+    assessmentParent.childrenIDs!.indexOf(assessmentID) + 1
+  const prefix = assessmentParent.childPrefix
+  if (prefix === undefined) {
     return assessment.name ?? ''
   }
   if (assessment.name === undefined) {
-    return `${group.prefix}${assessmentNumber}`
+    return `${prefix}${assessmentNumber}`
   }
-  return `${group.prefix}${assessmentNumber}: ${assessment.name}`
+  return `${prefix}${assessmentNumber}: ${assessment.name}`
 }
 
 export const getTotalWeight = (
   course: Course,
-  groupId: ID
+  assessmentID: ID
 ): RationalNumber | undefined => {
-  const group = course.groups[groupId]
-  if (group.totalWeight !== undefined) {
-    return group.totalWeight
+  const assessment = course.assessments[assessmentID]
+  if (assessment.weight !== undefined) {
+    return assessment.weight
   }
-  return group.assessments.reduce(
-    (accWeight: RationalNumber | undefined, assessmentId) =>
-      add(accWeight, course.assessments[assessmentId].weight),
+  return assessment.childrenIDs?.reduce(
+    (accWeight: RationalNumber | undefined, childID) =>
+      add(accWeight, getTotalWeight(course, childID)),
     undefined
   )
 }

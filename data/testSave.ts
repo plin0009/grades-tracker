@@ -8,90 +8,58 @@ export const testSave: UserSave = {
       code: 'CS 246',
       title: 'Object-Oriented Software Development',
       properties: {},
+      rootAssessmentIDs: [
+        '4e7f30d5-778d-49bd-aace-84eb364102b7',
+        '26c9e827-bf0f-4d19-ba33-845b6fca9797',
+      ],
       assessments: {
-        '0': {
+        '4e7f30d5-778d-49bd-aace-84eb364102b7': {
+          id: '4e7f30d5-778d-49bd-aace-84eb364102b7',
+          name: 'Assignments',
+          childPrefix: 'A',
+          weight: RationalNumber(70),
+          childrenIDs: [
+            '7d239b8d-4326-411c-9ac4-41004a3a1baf',
+            '2779fed5-3e69-42d3-abc5-42c7fe7606d7',
+            '2d5f7f71-c543-4f54-9280-65f7e6982e43',
+            '54da9c2e-134c-4655-8a51-a75ce8b997ef',
+            '8ebbdd73-c7f7-4c53-a393-f3c06c16599e',
+          ],
+        },
+        '7d239b8d-4326-411c-9ac4-41004a3a1baf': {
+          id: '7d239b8d-4326-411c-9ac4-41004a3a1baf',
           name: 'Linux',
           weight: RationalNumber(10),
-          groupId: '0',
+          parentID: '4e7f30d5-778d-49bd-aace-84eb364102b7',
         },
-        '1': {
+        '2779fed5-3e69-42d3-abc5-42c7fe7606d7': {
+          id: '2779fed5-3e69-42d3-abc5-42c7fe7606d7',
           name: 'Core C++ and Testing',
           weight: RationalNumber(12),
-          groupId: '0',
+          parentID: '4e7f30d5-778d-49bd-aace-84eb364102b7',
         },
-        '2': {
+        '2d5f7f71-c543-4f54-9280-65f7e6982e43': {
+          id: '2d5f7f71-c543-4f54-9280-65f7e6982e43',
           name: 'Introduction to OOP',
           weight: RationalNumber(18),
-          groupId: '0',
+          parentID: '4e7f30d5-778d-49bd-aace-84eb364102b7',
         },
-        '3': {
+        '54da9c2e-134c-4655-8a51-a75ce8b997ef': {
+          id: '54da9c2e-134c-4655-8a51-a75ce8b997ef',
           name: 'Inheritance and basic design patterns',
           weight: RationalNumber(18),
-          groupId: '0',
+          parentID: '4e7f30d5-778d-49bd-aace-84eb364102b7',
         },
-        '4': {
+        '8ebbdd73-c7f7-4c53-a393-f3c06c16599e': {
+          id: '8ebbdd73-c7f7-4c53-a393-f3c06c16599e',
           name: 'Advanced C++, OOP, and SE',
           weight: RationalNumber(12),
-          groupId: '0',
+          parentID: '4e7f30d5-778d-49bd-aace-84eb364102b7',
         },
-        '5': {
+        '26c9e827-bf0f-4d19-ba33-845b6fca9797': {
+          id: '26c9e827-bf0f-4d19-ba33-845b6fca9797',
           name: 'Final Project',
           weight: RationalNumber(30),
-        },
-      },
-      groups: {
-        '0': {
-          name: 'Assignments',
-          prefix: 'A',
-          totalWeight: RationalNumber(70),
-          assessments: ['0', '1', '2', '3', '4'],
-        },
-      },
-      ungrouped: ['5'],
-      types: {},
-    },
-    {
-      id: '1',
-      code: 'CS 245',
-      title: 'Logic and Computation',
-      properties: {},
-      assessments: {
-        '0': { groupId: '0' },
-        '1': { groupId: '0' },
-        '2': { groupId: '0' },
-        '3': { groupId: '0' },
-        '4': { groupId: '0' },
-        '5': { groupId: '0' },
-        '6': { groupId: '0' },
-        '7': { groupId: '0' },
-        '8': { groupId: '0' },
-        '9': { groupId: '0' },
-        '10': { name: 'Midterm Assessment LEARN' },
-        '11': { name: 'Midterm Assessment Crowdmark' },
-        '12': { name: 'Final Assessment LEARN' },
-        '13': { name: 'Final Assessment Crowdmark' },
-      },
-      groups: {
-        '0': {
-          name: 'Assignments',
-          prefix: 'A',
-          totalWeight: RationalNumber(40),
-          assessments: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-        },
-        '1': {
-          name: 'Midterm',
-          assessments: ['10', '11'],
-          totalWeight: RationalNumber(20),
-        },
-        '2': {
-          name: 'Final',
-          assessments: ['12', '13'],
-          totalWeight: RationalNumber(35),
-        },
-        '3': {
-          name: 'LEARN Quizzes',
-          assessments: [],
-          totalWeight: RationalNumber(5),
         },
       },
       types: {},

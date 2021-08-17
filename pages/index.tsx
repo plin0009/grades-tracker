@@ -1,14 +1,14 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useState } from 'react'
+import { AssessmentOverview } from '../components/Assessment'
 import { testSave } from '../data/testSave'
-import { getAssessmentName, getTotalWeight } from '../utils'
 import { load } from '../utils/loadsave'
-import { toPercentage } from '../utils/RationalNumber'
 
 const Home: NextPage = () => {
   //const [data, setData] = useState(load(testSave))
   const data = load(testSave)
+
+  console.log(data)
 
   return (
     <>
@@ -42,43 +42,12 @@ const Home: NextPage = () => {
                 <h2 className="text-2xl">{course.code}</h2>
                 <p className="text-gray-500">{course.title}</p>
                 <div>
-                  {Object.entries(course.groups).map(([id, group]) => (
-                    <div key={id}>
-                      <div className="flex justify-between">
-                        <p className="font-bold">{group.name}</p>
-                        <p className="font-bold">
-                          {toPercentage(getTotalWeight(course, id))}
-                        </p>
-                      </div>
-                      <div className="pl-4">
-                        {group.assessments.map((assessmentId) => (
-                          <div
-                            key={assessmentId}
-                            className="flex w-full justify-between"
-                          >
-                            <p>{getAssessmentName(course, assessmentId)}</p>
-                            <p>
-                              {toPercentage(
-                                course.assessments[assessmentId].weight
-                              )}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                  {course.ungrouped?.map((assessmentId) => (
-                    <div
-                      key={assessmentId}
-                      className="flex w-full justify-between"
-                    >
-                      <p className="font-bold">
-                        {getAssessmentName(course, assessmentId)}
-                      </p>
-                      <p className="font-bold">
-                        {toPercentage(course.assessments[assessmentId].weight!)}
-                      </p>
-                    </div>
+                  {course.rootAssessmentIDs.map((assessmentID, index) => (
+                    <AssessmentOverview
+                      key={index}
+                      course={course}
+                      assessmentID={assessmentID}
+                    />
                   ))}
                 </div>
               </div>
