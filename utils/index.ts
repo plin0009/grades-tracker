@@ -7,7 +7,8 @@ import {
 } from './RationalNumber'
 
 export interface UserState {
-  courses: Course[]
+  courseIDs: ID[]
+  courses: { [key: string]: Course }
 }
 
 export type ID = string

@@ -2,8 +2,9 @@ import { UserSave } from '../utils/loadsave'
 import { RationalNumber } from '../utils/RationalNumber'
 
 export const testSave: UserSave = {
-  courses: [
-    {
+  courseIDs: ['0'],
+  courses: {
+    '0': {
       id: '0',
       code: 'CS 246',
       title: 'Object-Oriented Software Development',
@@ -69,5 +70,5 @@ export const testSave: UserSave = {
       },
       types: {},
     },
-  ],
+  },
 }

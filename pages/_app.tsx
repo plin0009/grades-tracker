@@ -1,7 +1,24 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import { createContext } from 'react'
+import useData from '../hooks/useData'
+import { UserSave } from '../utils/loadsave'
+import { UserState } from '../utils'
+import { Spec } from 'immutability-helper'
+
+export const UserStateContext = createContext({
+  data: null as UserState | null,
+  updateData: (update: Spec<UserState>) => {},
+  loadData: (save: UserSave) => {},
+  saveData: () => {},
+})
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  const contextValue = useData()
+  return (
+    <UserStateContext.Provider value={contextValue}>
+      <Component {...pageProps} />
+    </UserStateContext.Provider>
+  )
 }
 export default MyApp
