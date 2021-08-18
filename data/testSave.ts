@@ -8,11 +8,14 @@ export const testSave: UserSave = {
       code: 'CS 246',
       title: 'Object-Oriented Software Development',
       properties: {},
-      rootAssessmentIDs: [
-        '4e7f30d5-778d-49bd-aace-84eb364102b7',
-        '26c9e827-bf0f-4d19-ba33-845b6fca9797',
-      ],
       assessments: {
+        root: {
+          id: 'root',
+          childrenIDs: [
+            '4e7f30d5-778d-49bd-aace-84eb364102b7',
+            '26c9e827-bf0f-4d19-ba33-845b6fca9797',
+          ],
+        },
         '4e7f30d5-778d-49bd-aace-84eb364102b7': {
           id: '4e7f30d5-778d-49bd-aace-84eb364102b7',
           name: 'Assignments',
@@ -31,12 +34,14 @@ export const testSave: UserSave = {
           name: 'Linux',
           weight: RationalNumber(10),
           parentID: '4e7f30d5-778d-49bd-aace-84eb364102b7',
+          grade: RationalNumber(90),
         },
         '2779fed5-3e69-42d3-abc5-42c7fe7606d7': {
           id: '2779fed5-3e69-42d3-abc5-42c7fe7606d7',
           name: 'Core C++ and Testing',
           weight: RationalNumber(12),
           parentID: '4e7f30d5-778d-49bd-aace-84eb364102b7',
+          grade: RationalNumber(50),
         },
         '2d5f7f71-c543-4f54-9280-65f7e6982e43': {
           id: '2d5f7f71-c543-4f54-9280-65f7e6982e43',

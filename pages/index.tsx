@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { AssessmentOverview } from '../components/Assessment'
+import AssessmentTable from '../components/AssessmentTable'
 import { testSave } from '../data/testSave'
 import { load } from '../utils/loadsave'
 
@@ -39,17 +39,14 @@ const Home: NextPage = () => {
           <div className="m-4 flex flex-col gap-4">
             {data.courses.map((course) => (
               <div key={course.id} className="rounded-xl p-8 w-full bg-white">
-                <h2 className="text-2xl">{course.code}</h2>
-                <p className="text-gray-500">{course.title}</p>
-                <div>
-                  {course.rootAssessmentIDs.map((assessmentID, index) => (
-                    <AssessmentOverview
-                      key={index}
-                      course={course}
-                      assessmentID={assessmentID}
-                    />
-                  ))}
+                <div className="mb-4">
+                  <h2 className="text-2xl">{course.code}</h2>
+                  <p className="text-gray-500">{course.title}</p>
                 </div>
+                <AssessmentTable
+                  course={course}
+                  className="rounded-lg border-2 border-gray-200"
+                />
               </div>
             ))}
           </div>

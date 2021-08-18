@@ -1,6 +1,5 @@
 export type RationalNumber = [number, number]
-
-type MaybeRationalNumber = RationalNumber | undefined
+export type MaybeRationalNumber = RationalNumber | undefined
 
 export const RationalNumber = (
   numerator: number,
@@ -46,4 +45,11 @@ export const multiply = (
 ): MaybeRationalNumber => {
   if (rn1 === undefined || rn2 === undefined) return undefined
   return RationalNumber(rn1[0] * rn2[0], rn1[1] * rn2[1])
+}
+export const divide = (
+  rn1: MaybeRationalNumber,
+  rn2: MaybeRationalNumber
+): MaybeRationalNumber => {
+  if (rn1 === undefined || rn2 === undefined) return undefined
+  return RationalNumber(rn1[0] * rn2[1], rn1[1] * rn2[0])
 }
