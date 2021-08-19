@@ -1,6 +1,6 @@
 import classNames from 'classnames'
-import { CalculatedGrade } from '../utils'
-import { toDecimal } from '../utils/RationalNumber'
+import { CalculatedGrade } from '@/utils'
+import { toDecimal } from '@/utils/RationalNumber'
 
 type GradeProps = {
   className?: string

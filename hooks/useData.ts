@@ -1,10 +1,10 @@
 import { useEffect, useReducer } from 'react'
 import update, { Spec } from 'immutability-helper'
-import { UserState } from '../utils'
-import { load, save, UserSave } from '../utils/loadsave'
-import { testSave } from '../data/testSave'
+import { UserState } from '@/utils'
+import { load, save, UserSave } from '@/utils/loadsave'
+import { testSave } from '@/data/testSave'
 
-type Action =
+export type Action =
   | {
       type: 'load'
       payload: UserState | null

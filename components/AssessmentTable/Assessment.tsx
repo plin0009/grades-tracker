@@ -5,10 +5,11 @@ import {
   getGrade,
   getTotalWeight,
   ID,
-} from '../../utils'
-import { toPercentage } from '../../utils/RationalNumber'
+} from '@/utils'
+import { toPercentage } from '@/utils/RationalNumber'
 import classNames from 'classnames'
-import Grade from '../Grade'
+import Grade from '@/components/Grade'
+import Link from 'next/link'
 
 interface AssessmentProps {
   course: Course
@@ -25,22 +26,30 @@ const WrappedAssessment: React.FC<AssessmentProps> = ({
   const hasChildren = assessment.childrenIDs !== undefined
   return (
     <div>
-      <div
-        className={classNames(
-          'flex gap-4 px-4 py-2 rounded',
-          //{ 'font-bold': assessment.parentID === undefined },
-          { 'cursor-pointer hover:bg-gray-100': hasChildren }
-        )}
-        onClick={() => setExpanded((t) => !t)}
-      >
-        <p className="flex-1 truncate" style={{ paddingLeft: `${depth}em` }}>
-          {getAssessmentName(course, assessmentID)}
-        </p>
-        <p className="w-16 text-center">
+      <div className="flex gap-4 px-4 py-2 rounded group">
+        <div className="overflow-hidden" style={{ paddingLeft: `${depth}em` }}>
+          {hasChildren && (
+            <button
+              className="absolute -ml-8 w-6 h-6 bg-white border rounded shadow opacity-0 group-hover:opacity-100"
+              onClick={() => setExpanded((t) => !t)}
+            >
+              <span className="absolute left-1.5 right-1.5 top-2.5 bottom-2.5 bg-gray-300" />
+              {!expanded && (
+                <span className="absolute top-1.5 bottom-1.5 left-2.5 right-2.5 bg-gray-300" />
+              )}
+            </button>
+          )}
+          <p className="truncate">{getAssessmentName(course, assessmentID)}</p>
+        </div>
+        <Link href={`/${course.id}/${assessmentID}`} passHref>
+          <a className="px-2 rounded shadow hidden group-hover:block">Open</a>
+        </Link>
+        <div className="flex-1" />
+        <p className="w-16 text-center flex-shrink-0">
           {toPercentage(getTotalWeight(course, assessmentID))}
         </p>
         <Grade
-          className="w-16 text-center"
+          className="w-16 text-center flex-shrink-0"
           grade={getGrade(course, assessmentID)}
           backup="average"
         />

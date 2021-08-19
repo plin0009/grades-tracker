@@ -1,7 +1,7 @@
 import classNames from 'classnames'
-import { Course, getGrade, getTotalWeight, ID } from '../../utils'
-import { toPercentage } from '../../utils/RationalNumber'
-import Grade from '../Grade'
+import { Course, getGrade, getTotalWeight, ID } from '@/utils'
+import { toPercentage } from '@/utils/RationalNumber'
+import Grade from '@/components/Grade'
 import Assessment from './Assessment'
 
 interface AssessmentTableProps {
