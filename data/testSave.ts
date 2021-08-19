@@ -22,6 +22,7 @@ export const testSave: UserSave = {
           name: 'Assignments',
           childPrefix: 'A',
           weight: RationalNumber(70),
+          parentID: 'root',
           childrenIDs: [
             '7d239b8d-4326-411c-9ac4-41004a3a1baf',
             '2779fed5-3e69-42d3-abc5-42c7fe7606d7',
@@ -66,6 +67,7 @@ export const testSave: UserSave = {
           id: '26c9e827-bf0f-4d19-ba33-845b6fca9797',
           name: 'Final Project',
           weight: RationalNumber(30),
+          parentID: 'root',
         },
       },
       types: {},

@@ -147,3 +147,14 @@ export const getGrade = (course: Course, assessmentID: ID): CalculatedGrade => {
     average: getAverageGrade(course, assessmentID),
   }
 }
+
+export const getPathIDs = (course: Course, assessmentID: ID): ID[] => {
+  let currentID = assessmentID
+  let pathIDs: ID[] = []
+  while (currentID !== 'root') {
+    pathIDs = [currentID, ...pathIDs]
+    const assessment = course.assessments[currentID]
+    currentID = assessment.parentID!
+  }
+  return pathIDs
+}

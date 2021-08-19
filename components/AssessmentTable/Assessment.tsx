@@ -26,7 +26,7 @@ const WrappedAssessment: React.FC<AssessmentProps> = ({
   const hasChildren = assessment.childrenIDs !== undefined
   return (
     <div>
-      <div className="flex gap-4 px-4 py-2 rounded group">
+      <div className="flex gap-4 px-4 py-2 rounded group items-center">
         <div className="overflow-hidden" style={{ paddingLeft: `${depth}em` }}>
           {hasChildren && (
             <button
@@ -42,7 +42,9 @@ const WrappedAssessment: React.FC<AssessmentProps> = ({
           <p className="truncate">{getAssessmentName(course, assessmentID)}</p>
         </div>
         <Link href={`/${course.id}/${assessmentID}`} passHref>
-          <a className="px-2 rounded shadow hidden group-hover:block">Open</a>
+          <a className="px-2 rounded border text-gray-400 shadow hidden group-hover:block text-sm">
+            Open
+          </a>
         </Link>
         <div className="flex-1" />
         <p className="w-16 text-center flex-shrink-0">
