@@ -1,8 +1,9 @@
 import { useEffect, useReducer } from 'react'
 import update, { Spec } from 'immutability-helper'
-import { UserState } from '@/utils'
+import { ID, UserState } from '@/utils'
 import { load, save, UserSave } from '@/utils/loadsave'
 import { testSave } from '@/data/testSave'
+import { MaybeRationalNumber } from '@/utils/RationalNumber'
 
 export type Action =
   | {
@@ -12,6 +13,14 @@ export type Action =
   | {
       type: 'update'
       payload: Spec<UserState>
+    }
+  | {
+      type: 'updateGrade'
+      payload: {
+        courseID: ID
+        assessmentID: ID
+        grade: MaybeRationalNumber
+      }
     }
 
 const useData = () => {
@@ -23,6 +32,22 @@ const useData = () => {
         case 'update':
           if (state === null) return null
           return update(state, action.payload)
+        case 'updateGrade':
+          const { courseID, assessmentID, grade } = action.payload
+          return update(state, {
+            courses: {
+              [courseID]: {
+                assessments: {
+                  [assessmentID]: {
+                    grade: { $set: grade },
+                  },
+                },
+              },
+            },
+          })
+        default:
+          console.error('Reducer action not supported')
+          return state
       }
     },
     null
@@ -36,7 +61,7 @@ const useData = () => {
     // TODO: replace `testSave` with `null`
     loadData(localSaveString === null ? testSave : JSON.parse(localSaveString))
     // TODO: save data to local storage on page close?
-  })
+  }, [])
 
   return {
     data,

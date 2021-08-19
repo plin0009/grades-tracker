@@ -8,13 +8,14 @@ import { getAssessmentName, getGrade, getTotalWeight } from '@/utils'
 import Grade from '@/components/Grade'
 import { toPercentage } from '@/utils/RationalNumber'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import { RationalNumber } from 'utils/RationalNumber'
 
 const AssessmentPage: NextPage = () => {
   const router = useRouter()
   const courseID = router.query.courseID as string
   const assessmentID = router.query.assessmentID as string
 
-  const { data } = useContext(UserStateContext)
+  const { data, updateData } = useContext(UserStateContext)
 
   if (data === null) return <p>No data</p>
   if (data.courses[courseID] === undefined) return <p>Course not found</p>
@@ -44,6 +45,36 @@ const AssessmentPage: NextPage = () => {
             <div>
               <p>{toPercentage(getTotalWeight(course, assessmentID))}</p>
               <Grade grade={getGrade(course, assessmentID)} backup="average" />
+              <button
+                className="px-4 py-2 bg-blue-500 text-white rounded"
+                onClick={() => {
+                  updateData({
+                    type: 'updateGrade',
+                    payload: {
+                      courseID,
+                      assessmentID,
+                      grade: undefined,
+                    },
+                  })
+                }}
+              >
+                Erase grade
+              </button>{' '}
+              <button
+                className="px-4 py-2 bg-blue-500 text-white rounded"
+                onClick={() => {
+                  updateData({
+                    type: 'updateGrade',
+                    payload: {
+                      courseID,
+                      assessmentID,
+                      grade: RationalNumber(50),
+                    },
+                  })
+                }}
+              >
+                Set grade to be 50
+              </button>
             </div>
           )}
         </div>
