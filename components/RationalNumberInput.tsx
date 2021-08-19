@@ -23,7 +23,11 @@ const RationalNumberInput: React.FC<RationalNumberInputProps> = ({
   const [denominatorInput, setDenominatorInput] = useState<string>(
     defaultDenominatorInput
   )
-  const canSave = !isNaN(+numeratorInput) && !isNaN(+denominatorInput)
+  const canSave =
+    numeratorInput !== '' &&
+    !isNaN(+numeratorInput) &&
+    !isNaN(+denominatorInput) &&
+    (denominatorInput === '' || +denominatorInput !== 0)
   useEffect(() => {
     setNumeratorInput(defaultNumeratorInput)
     setDenominatorInput(defaultDenominatorInput)
@@ -45,7 +49,7 @@ const RationalNumberInput: React.FC<RationalNumberInputProps> = ({
             type="text"
             className="rounded-lg shadow border-2 border-gray-300 px-4 py-2 w-20 text-center"
             value={numeratorInput}
-            onChange={(e) => setNumeratorInput(e.target.value)}
+            onChange={(e) => setNumeratorInput(e.target.value.trim())}
           />
           <div
             className={classNames(
@@ -60,7 +64,7 @@ const RationalNumberInput: React.FC<RationalNumberInputProps> = ({
               type="text"
               className="rounded-lg shadow border-2 border-gray-300 px-4 py-2 w-20 text-center"
               value={denominatorInput}
-              onChange={(e) => setDenominatorInput(e.target.value)}
+              onChange={(e) => setDenominatorInput(e.target.value.trim())}
               placeholder="100"
             />
           </div>
