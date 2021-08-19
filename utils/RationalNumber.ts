@@ -9,6 +9,9 @@ export const RationalNumber = (
   return [numerator, denominator]
 }
 
+export const PercentRationalNumber = (numerator: number) =>
+  RationalNumber(numerator, 100)
+
 export const toDecimal = (
   rationalNumber: MaybeRationalNumber,
   decimalPlaces: number = 1
@@ -22,12 +25,18 @@ export const toDecimal = (
     : result.slice(0, -decimalPlaces) + '.' + result.slice(-decimalPlaces)
 }
 
-export const toPercentage = (
+export const toPercentage: (
   rationalNumber: MaybeRationalNumber,
-  decimalPlaces: number = 1
-): string => {
+  options?: { decimalPlaces?: number; percentSign?: boolean }
+) => string = (
+  rationalNumber: MaybeRationalNumber,
+  { decimalPlaces, percentSign } = { decimalPlaces: 1, percentSign: true }
+) => {
   if (rationalNumber === undefined) return ''
-  return toDecimal(rationalNumber, decimalPlaces) + '%'
+  return (
+    toDecimal(multiply(rationalNumber, RationalNumber(100)), decimalPlaces) +
+    (percentSign ? '%' : '')
+  )
 }
 
 export const add = (

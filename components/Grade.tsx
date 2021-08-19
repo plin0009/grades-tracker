@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { CalculatedGrade } from 'utils'
-import { toDecimal } from 'utils/RationalNumber'
+import { toPercentage } from 'utils/RationalNumber'
 
 type GradeProps = {
   className?: string
@@ -15,14 +15,20 @@ type GradeProps = {
       backup?: undefined
     }
 )
+
+const toPercentageOptions = { decimalPlaces: 0, percentSign: false }
 const Grade: React.FC<GradeProps> = ({ grade, className, mode, backup }) => {
   if (mode === undefined && grade.inputted !== undefined) {
-    return <p className={className}>{toDecimal(grade.inputted)}</p>
+    return (
+      <p className={className}>
+        {toPercentage(grade.inputted, toPercentageOptions)}
+      </p>
+    )
   }
   if ((mode === 'total' || backup === 'total') && grade.total !== undefined)
     return (
       <p className={classNames(className, 'bg-yellow-200 rounded')}>
-        {toDecimal(grade.total)}
+        {toPercentage(grade.total, toPercentageOptions)}
       </p>
     )
   if (
@@ -31,7 +37,7 @@ const Grade: React.FC<GradeProps> = ({ grade, className, mode, backup }) => {
   )
     return (
       <p className={classNames(className, 'bg-purple-100 rounded')}>
-        {toDecimal(grade.average)}
+        {toPercentage(grade.average, toPercentageOptions)}
       </p>
     )
   return <p className={className}></p>

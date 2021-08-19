@@ -8,7 +8,7 @@ import { getAssessmentName, getGrade, getTotalWeight } from 'utils'
 import Grade from 'components/Grade'
 import { toPercentage } from 'utils/RationalNumber'
 import Breadcrumbs from 'components/Breadcrumbs'
-import { RationalNumber } from 'utils/RationalNumber'
+import RationalNumberInput from 'components/RationalNumberInput'
 
 const AssessmentPage: NextPage = () => {
   const router = useRouter()
@@ -45,36 +45,19 @@ const AssessmentPage: NextPage = () => {
             <div>
               <p>{toPercentage(getTotalWeight(course, assessmentID))}</p>
               <Grade grade={getGrade(course, assessmentID)} backup="average" />
-              <button
-                className="px-4 py-2 bg-blue-500 text-white rounded"
-                onClick={() => {
+              <RationalNumberInput
+                value={assessment.grade}
+                setValue={(newValue) =>
                   updateData({
                     type: 'updateGrade',
                     payload: {
                       courseID,
                       assessmentID,
-                      grade: undefined,
+                      grade: newValue,
                     },
                   })
-                }}
-              >
-                Erase grade
-              </button>{' '}
-              <button
-                className="px-4 py-2 bg-blue-500 text-white rounded"
-                onClick={() => {
-                  updateData({
-                    type: 'updateGrade',
-                    payload: {
-                      courseID,
-                      assessmentID,
-                      grade: RationalNumber(50),
-                    },
-                  })
-                }}
-              >
-                Set grade to be 50
-              </button>
+                }
+              />
             </div>
           )}
         </div>
