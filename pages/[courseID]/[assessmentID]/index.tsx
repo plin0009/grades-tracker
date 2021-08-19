@@ -4,18 +4,17 @@ import { useContext } from 'react'
 import AssessmentTable from 'components/AssessmentTable'
 import Header from 'components/Header'
 import { UserStateContext } from 'pages/_app'
-import { getAssessmentName, getGrade, getTotalWeight } from 'utils'
-import Grade from 'components/Grade'
+import { getAssessmentName, getTotalWeight } from 'utils'
 import { toPercentage } from 'utils/RationalNumber'
 import Breadcrumbs from 'components/Breadcrumbs'
-import RationalNumberInput from 'components/RationalNumberInput'
+import EditableGrade from 'components/Grade/EditableGrade'
 
 const AssessmentPage: NextPage = () => {
   const router = useRouter()
   const courseID = router.query.courseID as string
   const assessmentID = router.query.assessmentID as string
 
-  const { data, updateData } = useContext(UserStateContext)
+  const { data } = useContext(UserStateContext)
 
   if (data === null) return <p>No data</p>
   if (data.courses[courseID] === undefined) return <p>Course not found</p>
@@ -44,20 +43,15 @@ const AssessmentPage: NextPage = () => {
           ) : (
             <div>
               <p>{toPercentage(getTotalWeight(course, assessmentID))}</p>
-              <Grade grade={getGrade(course, assessmentID)} backup="average" />
-              <RationalNumberInput
-                value={assessment.grade}
-                setValue={(newValue) =>
-                  updateData({
-                    type: 'updateGrade',
-                    payload: {
-                      courseID,
-                      assessmentID,
-                      grade: newValue,
-                    },
-                  })
-                }
-              />
+              <div className="border-2 border-gray-200 rounded-xl p-4 w-64 flex flex-col items-center">
+                <span>Grade</span>
+                <EditableGrade
+                  className="text-4xl"
+                  course={course}
+                  assessmentID={assessmentID}
+                  backup="average"
+                />
+              </div>
             </div>
           )}
         </div>

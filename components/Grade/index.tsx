@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import { CalculatedGrade } from 'utils'
 import { toPercentage } from 'utils/RationalNumber'
 
-type GradeProps = {
+export type GradeProps = {
   className?: string
   grade: CalculatedGrade
 } & (
@@ -40,7 +40,7 @@ const Grade: React.FC<GradeProps> = ({ grade, className, mode, backup }) => {
         {toPercentage(grade.average, toPercentageOptions)}
       </p>
     )
-  return <p className={className}></p>
+  return <p className={classNames(className, 'text-gray-300')}>N/A</p>
 }
 
 export default Grade
