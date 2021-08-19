@@ -1,5 +1,5 @@
-import { UserSave } from '@/utils/loadsave'
-import { RationalNumber } from '@/utils/RationalNumber'
+import { UserSave } from 'utils/loadsave'
+import { RationalNumber } from 'utils/RationalNumber'
 
 export const testSave: UserSave = {
   courseIDs: ['0'],

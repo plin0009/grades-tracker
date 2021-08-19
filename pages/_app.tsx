@@ -1,9 +1,9 @@
-import '@/styles/globals.css'
+import 'styles/globals.css'
 import type { AppProps } from 'next/app'
 import { createContext, Dispatch } from 'react'
-import useData, { Action } from '@/hooks/useData'
-import { UserSave } from '@/utils/loadsave'
-import { UserState } from '@/utils'
+import useData, { Action } from 'hooks/useData'
+import { UserSave } from 'utils/loadsave'
+import { UserState } from 'utils'
 
 export const UserStateContext = createContext({
   data: null as UserState | null,

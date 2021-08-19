@@ -1,9 +1,9 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
-import AssessmentTable from '@/components/AssessmentTable'
-import Header from '@/components/Header'
-import { UserStateContext } from '@/pages/_app'
+import AssessmentTable from 'components/AssessmentTable'
+import Header from 'components/Header'
+import { UserStateContext } from 'pages/_app'
 
 const CoursePage: NextPage = () => {
   const router = useRouter()

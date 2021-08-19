@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useContext } from 'react'
-import Header from '@/components/Header'
+import Header from 'components/Header'
 import { UserStateContext } from './_app'
 
 const Home: NextPage = () => {

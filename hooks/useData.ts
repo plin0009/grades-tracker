@@ -1,9 +1,9 @@
 import { useEffect, useReducer } from 'react'
 import update, { Spec } from 'immutability-helper'
-import { ID, UserState } from '@/utils'
-import { load, save, UserSave } from '@/utils/loadsave'
-import { testSave } from '@/data/testSave'
-import { MaybeRationalNumber } from '@/utils/RationalNumber'
+import { ID, UserState } from 'utils'
+import { load, save, UserSave } from 'utils/loadsave'
+import { testSave } from 'data/testSave'
+import { MaybeRationalNumber } from 'utils/RationalNumber'
 
 export type Action =
   | {

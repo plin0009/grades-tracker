@@ -1,4 +1,4 @@
-import { Course, getAssessmentName, getPathIDs, ID } from '@/utils'
+import { Course, getAssessmentName, getPathIDs, ID } from 'utils'
 import Link from 'next/link'
 
 interface BreadcrumbsProps {

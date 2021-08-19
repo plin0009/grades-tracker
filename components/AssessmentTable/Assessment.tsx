@@ -1,14 +1,8 @@
 import { useState } from 'react'
-import {
-  Course,
-  getAssessmentName,
-  getGrade,
-  getTotalWeight,
-  ID,
-} from '@/utils'
-import { toPercentage } from '@/utils/RationalNumber'
+import { Course, getAssessmentName, getGrade, getTotalWeight, ID } from 'utils'
+import { toPercentage } from 'utils/RationalNumber'
 import classNames from 'classnames'
-import Grade from '@/components/Grade'
+import Grade from 'components/Grade'
 import Link from 'next/link'
 
 interface AssessmentProps {
