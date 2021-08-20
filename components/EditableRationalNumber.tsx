@@ -15,7 +15,7 @@ const EditableRationalNumber: React.FC<EditableGradeProps> = ({
   const [editing, setEditing] = useState(false)
 
   return (
-    <div className="flex gap-2 group items-center relative">
+    <div className="group-a relative">
       {children}
       {editing ? (
         <RationalNumberInput
@@ -28,12 +28,14 @@ const EditableRationalNumber: React.FC<EditableGradeProps> = ({
           closeInput={() => setEditing(false)}
         />
       ) : (
-        <button
-          className="px-2 rounded border text-gray-400 shadow hidden group-hover:block text-sm"
-          onClick={() => setEditing(true)}
-        >
-          Edit
-        </button>
+        <div className="absolute left-full -top-2 -bottom-2 flex px-2 items-center z-30">
+          <button
+            className="px-2 rounded border text-gray-400 bg-white shadow hidden group-a-hover:block text-sm"
+            onClick={() => setEditing(true)}
+          >
+            Edit
+          </button>
+        </div>
       )}
     </div>
   )

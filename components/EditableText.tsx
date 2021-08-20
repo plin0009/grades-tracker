@@ -16,7 +16,7 @@ const EditableText: React.FC<EditableTextProps> = ({
   const [editing, setEditing] = useState(false)
 
   return (
-    <div className="flex gap-2 group items-center relative">
+    <div className="flex gap-2 group-a items-center relative">
       <p className={classNames(className)}>{children}</p>{' '}
       {editing ? (
         <TextInput
@@ -30,7 +30,7 @@ const EditableText: React.FC<EditableTextProps> = ({
         />
       ) : (
         <button
-          className="px-2 rounded border text-gray-400 shadow hidden group-hover:block text-sm"
+          className="px-2 rounded border text-gray-400 bg-white shadow hidden group-a-hover:block text-sm"
           onClick={() => setEditing(true)}
         >
           Edit

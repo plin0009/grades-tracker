@@ -1,3 +1,7 @@
+.group-a:hover .group-a-hover\:block {
+  @apply block;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
