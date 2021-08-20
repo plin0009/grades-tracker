@@ -32,13 +32,10 @@ export interface Assessment {
   id: ID
   name?: string
   childPrefix?: string
-  //groupId?: ID
   typeIds?: ID[]
   weight?: RationalNumber
   grade?: RationalNumber
-  //parent?: Assessment
   parentID?: ID
-  //children?: Assessment[]
   childrenIDs?: ID[]
   // TODO: due dates
 }

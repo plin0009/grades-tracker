@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from 'react'
 import update, { Spec } from 'immutability-helper'
-import { ID, UserState } from 'utils'
+import { Assessment, Course, ID, UserState } from 'utils'
 import { load, save, UserSave } from 'utils/loadsave'
 import { testSave } from 'data/testSave'
 import { MaybeRationalNumber } from 'utils/RationalNumber'
@@ -11,24 +11,15 @@ export type Action =
       payload: UserState | null
     }
   | {
-      type: 'update'
-      payload: Spec<UserState>
+      type: 'updateCourse'
+      payload: { courseID: ID } & Spec<Course>
     }
   | {
-      type: 'updateGrade'
+      type: 'updateAssessment'
       payload: {
         courseID: ID
         assessmentID: ID
-        grade: MaybeRationalNumber
-      }
-    }
-  | {
-      type: 'updateAssessmentName'
-      payload: {
-        courseID: ID
-        assessmentID: ID
-        name?: string
-      }
+      } & Spec<Assessment>
     }
 
 const useData = () => {
@@ -37,30 +28,24 @@ const useData = () => {
       switch (action.type) {
         case 'load':
           return action.payload
-        case 'update':
-          if (state === null) return null
-          return update(state, action.payload)
-        case 'updateGrade':
-          const { courseID, assessmentID, grade } = action.payload
+        case 'updateCourse': {
+          const { courseID, ...spec } = action.payload
           return update(state, {
             courses: {
               [courseID]: {
-                assessments: {
-                  [assessmentID]: {
-                    grade: { $set: grade },
-                  },
-                },
+                ...spec,
               },
             },
           })
-        case 'updateAssessmentName': {
-          const { courseID, assessmentID, name } = action.payload
+        }
+        case 'updateAssessment': {
+          const { courseID, assessmentID, ...spec } = action.payload
           return update(state, {
             courses: {
               [courseID]: {
                 assessments: {
                   [assessmentID]: {
-                    name: { $set: name },
+                    ...spec,
                   },
                 },
               },

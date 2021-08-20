@@ -4,11 +4,12 @@ import { useContext } from 'react'
 import AssessmentTable from 'components/AssessmentTable'
 import Header from 'components/Header'
 import { UserStateContext } from 'pages/_app'
-import { getAssessmentName, getTotalWeight } from 'utils'
+import { getAssessmentName, getGrade, getTotalWeight } from 'utils'
 import { toPercentage } from 'utils/RationalNumber'
 import Breadcrumbs from 'components/Breadcrumbs'
-import EditableGrade from 'components/Grade/EditableGrade'
+import EditableRationalNumber from 'components/EditableRationalNumber'
 import EditableText from 'components/EditableText'
+import Grade from 'components/Grade'
 
 const AssessmentPage: NextPage = () => {
   const router = useRouter()
@@ -35,8 +36,8 @@ const AssessmentPage: NextPage = () => {
               value={assessment.name}
               setValue={(newValue) =>
                 updateData({
-                  type: 'updateAssessmentName',
-                  payload: { courseID, assessmentID, name: newValue },
+                  type: 'updateAssessment',
+                  payload: { courseID, assessmentID, name: { $set: newValue } },
                 })
               }
             >
@@ -54,18 +55,53 @@ const AssessmentPage: NextPage = () => {
             <div className="w-full flex gap-4">
               <div className="flex-1 border-2 border-gray-200 rounded-xl p-4 flex flex-col items-center">
                 <span>Weight</span>
-                <p className="text-4xl">
-                  {toPercentage(getTotalWeight(course, assessmentID))}
-                </p>
+                <EditableRationalNumber
+                  value={assessment.weight}
+                  setValue={(newValue) =>
+                    updateData({
+                      type: 'updateAssessment',
+                      payload: {
+                        courseID,
+                        assessmentID,
+                        weight: { $set: newValue },
+                      },
+                    })
+                  }
+                >
+                  <p className="text-4xl">
+                    {toPercentage(getTotalWeight(course, assessmentID))}
+                  </p>
+                </EditableRationalNumber>
               </div>
               <div className="flex-1 border-2 border-gray-200 rounded-xl p-4 flex flex-col items-center">
                 <span>Grade</span>
-                <EditableGrade
-                  className="text-4xl"
-                  course={course}
-                  assessmentID={assessmentID}
-                  backup="average"
-                />
+                {/*
+                 *<EditableGrade
+                 *  className="text-4xl"
+                 *  course={course}
+                 *  assessmentID={assessmentID}
+                 *  backup="average"
+                 * />
+                 */}
+                <EditableRationalNumber
+                  value={assessment.grade}
+                  setValue={(newValue) =>
+                    updateData({
+                      type: 'updateAssessment',
+                      payload: {
+                        courseID,
+                        assessmentID,
+                        grade: { $set: newValue },
+                      },
+                    })
+                  }
+                >
+                  <Grade
+                    className="text-4xl"
+                    grade={getGrade(course, assessmentID)}
+                    backup="average"
+                  />
+                </EditableRationalNumber>
               </div>
             </div>
           )}

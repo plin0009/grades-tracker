@@ -1,14 +1,13 @@
-import classNames from 'classnames'
+import RationalNumberInput from 'components/RationalNumberInput'
 import { useState } from 'react'
-import TextInput from './TextInput'
+import { MaybeRationalNumber } from 'utils/RationalNumber'
 
-type EditableTextProps = {
-  className?: string
-  value?: string
-  setValue: (newValue: string | undefined) => void
+interface EditableGradeProps {
+  value: MaybeRationalNumber
+  setValue: (newValue: MaybeRationalNumber) => void
 }
-const EditableText: React.FC<EditableTextProps> = ({
-  className,
+
+const EditableRationalNumber: React.FC<EditableGradeProps> = ({
   value,
   setValue,
   children,
@@ -17,15 +16,15 @@ const EditableText: React.FC<EditableTextProps> = ({
 
   return (
     <div className="flex gap-2 group items-center relative">
-      <p className={classNames(className)}>{children}</p>{' '}
+      {children}
       {editing ? (
-        <TextInput
+        <RationalNumberInput
+          className="absolute top-0 -left-8"
           value={value}
           setValue={(newValue) => {
             setValue(newValue)
             setEditing(false)
           }}
-          className={classNames(className)}
           closeInput={() => setEditing(false)}
         />
       ) : (
@@ -40,4 +39,4 @@ const EditableText: React.FC<EditableTextProps> = ({
   )
 }
 
-export default EditableText
+export default EditableRationalNumber
