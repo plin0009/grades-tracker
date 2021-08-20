@@ -22,6 +22,14 @@ export type Action =
         grade: MaybeRationalNumber
       }
     }
+  | {
+      type: 'updateAssessmentName'
+      payload: {
+        courseID: ID
+        assessmentID: ID
+        name?: string
+      }
+    }
 
 const useData = () => {
   const [data, updateData] = useReducer(
@@ -45,6 +53,20 @@ const useData = () => {
               },
             },
           })
+        case 'updateAssessmentName': {
+          const { courseID, assessmentID, name } = action.payload
+          return update(state, {
+            courses: {
+              [courseID]: {
+                assessments: {
+                  [assessmentID]: {
+                    name: { $set: name },
+                  },
+                },
+              },
+            },
+          })
+        }
         default:
           console.error('Reducer action not supported')
           return state

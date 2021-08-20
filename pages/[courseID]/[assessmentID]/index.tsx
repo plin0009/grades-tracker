@@ -8,13 +8,14 @@ import { getAssessmentName, getTotalWeight } from 'utils'
 import { toPercentage } from 'utils/RationalNumber'
 import Breadcrumbs from 'components/Breadcrumbs'
 import EditableGrade from 'components/Grade/EditableGrade'
+import EditableText from 'components/EditableText'
 
 const AssessmentPage: NextPage = () => {
   const router = useRouter()
   const courseID = router.query.courseID as string
   const assessmentID = router.query.assessmentID as string
 
-  const { data } = useContext(UserStateContext)
+  const { data, updateData } = useContext(UserStateContext)
 
   if (data === null) return <p>No data</p>
   if (data.courses[courseID] === undefined) return <p>Course not found</p>
@@ -29,9 +30,18 @@ const AssessmentPage: NextPage = () => {
         <div className="border-2 border-gray-200 mb-8 p-8 rounded-xl">
           <div className="mb-4">
             <Breadcrumbs course={course} assessmentID={assessmentID} />
-            <h2 className="text-3xl font-bold">
+            <EditableText
+              className="text-3xl font-bold"
+              value={assessment.name}
+              setValue={(newValue) =>
+                updateData({
+                  type: 'updateAssessmentName',
+                  payload: { courseID, assessmentID, name: newValue },
+                })
+              }
+            >
               {getAssessmentName(course, assessmentID)}
-            </h2>
+            </EditableText>
           </div>
           {assessment.childrenIDs !== undefined &&
           assessment.childrenIDs.length > 0 ? (

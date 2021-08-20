@@ -46,14 +46,14 @@ export interface Assessment {
 export const getAssessmentName = (course: Course, assessmentID: ID): string => {
   const assessment = course.assessments[assessmentID]
   if (assessment.parentID === undefined) {
-    return assessment.name ?? ''
+    return assessment.name ?? 'Untitled'
   }
   const assessmentParent = course.assessments[assessment.parentID]
   const assessmentNumber =
     assessmentParent.childrenIDs!.indexOf(assessmentID) + 1
   const prefix = assessmentParent.childPrefix
   if (prefix === undefined) {
-    return assessment.name ?? ''
+    return assessment.name ?? 'Untitled'
   }
   if (assessment.name === undefined) {
     return `${prefix}${assessmentNumber}`
