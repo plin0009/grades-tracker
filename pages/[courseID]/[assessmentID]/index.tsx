@@ -4,12 +4,12 @@ import { useContext } from 'react'
 import AssessmentTable from 'components/AssessmentTable'
 import Header from 'components/Header'
 import { UserStateContext } from 'pages/_app'
-import { getAssessmentName, getGrade, getTotalWeight } from 'utils'
-import { toPercentage } from 'utils/RationalNumber'
+import { getAssessmentName } from 'utils'
 import Breadcrumbs from 'components/Breadcrumbs'
 import EditableRationalNumber from 'components/EditableRationalNumber'
 import EditableText from 'components/EditableText'
 import Grade from 'components/Grade'
+import Weight from 'components/Weight'
 
 const AssessmentPage: NextPage = () => {
   const router = useRouter()
@@ -68,21 +68,15 @@ const AssessmentPage: NextPage = () => {
                     })
                   }
                 >
-                  <p className="text-4xl">
-                    {toPercentage(getTotalWeight(course, assessmentID))}
-                  </p>
+                  <Weight
+                    className="text-4xl"
+                    course={course}
+                    assessmentID={assessmentID}
+                  />
                 </EditableRationalNumber>
               </div>
               <div className="flex-1 border-2 border-gray-200 rounded-xl p-4 flex flex-col items-center">
                 <span>Grade</span>
-                {/*
-                 *<EditableGrade
-                 *  className="text-4xl"
-                 *  course={course}
-                 *  assessmentID={assessmentID}
-                 *  backup="average"
-                 * />
-                 */}
                 <EditableRationalNumber
                   value={assessment.grade}
                   setValue={(newValue) =>
@@ -98,7 +92,8 @@ const AssessmentPage: NextPage = () => {
                 >
                   <Grade
                     className="text-4xl"
-                    grade={getGrade(course, assessmentID)}
+                    course={course}
+                    assessmentID={assessmentID}
                     backup="average"
                   />
                 </EditableRationalNumber>

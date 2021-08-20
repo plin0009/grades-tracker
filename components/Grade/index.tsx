@@ -1,10 +1,11 @@
 import classNames from 'classnames'
-import { CalculatedGrade } from 'utils'
+import { Course, getGrade, ID } from 'utils'
 import { toPercentage } from 'utils/RationalNumber'
 
 export type GradeProps = {
   className?: string
-  grade: CalculatedGrade
+  course: Course
+  assessmentID: ID
 } & (
   | {
       mode?: undefined
@@ -17,7 +18,14 @@ export type GradeProps = {
 )
 
 const toPercentageOptions = { decimalPlaces: 0, percentSign: false }
-const Grade: React.FC<GradeProps> = ({ grade, className, mode, backup }) => {
+const Grade: React.FC<GradeProps> = ({
+  course,
+  assessmentID,
+  className,
+  mode,
+  backup,
+}) => {
+  const grade = getGrade(course, assessmentID)
   if (mode === undefined && grade.inputted !== undefined) {
     return (
       <p className={className}>

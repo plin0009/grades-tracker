@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Course, getAssessmentName, getGrade, getTotalWeight, ID } from 'utils'
-import { toPercentage } from 'utils/RationalNumber'
+import { Course, getAssessmentName, ID } from 'utils'
 import classNames from 'classnames'
 import Grade from 'components/Grade'
 import Link from 'next/link'
+import Weight from 'components/Weight'
 
 interface AssessmentProps {
   course: Course
@@ -41,12 +41,15 @@ const WrappedAssessment: React.FC<AssessmentProps> = ({
           </a>
         </Link>
         <div className="flex-1" />
-        <p className="w-16 text-center flex-shrink-0">
-          {toPercentage(getTotalWeight(course, assessmentID))}
-        </p>
+        <Weight
+          className="w-16 text-center flex-shrink-0"
+          course={course}
+          assessmentID={assessmentID}
+        />
         <Grade
           className="w-16 text-center flex-shrink-0"
-          grade={getGrade(course, assessmentID)}
+          course={course}
+          assessmentID={assessmentID}
           backup="average"
         />
       </div>
