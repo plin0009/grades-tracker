@@ -22,7 +22,7 @@ const Home: NextPage = () => {
       <main>
         <div className="mb-8 rounded-xl">
           <h2 className="text-center text-xl mb-4">Courses</h2>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-wrap gap-4">
             {data === null ? (
               <p>No data found</p>
             ) : (
@@ -33,17 +33,18 @@ const Home: NextPage = () => {
                     key={course.id}
                     className="rounded-xl p-8 w-full border-2 border-gray-200"
                   >
-                    <div>
-                      <Link href={`/${course.id}`} passHref>
-                        <a>
-                          <h2 className="text-2xl font-bold">{course.code}</h2>
-                        </a>
-                      </Link>
-                      <p className="text-gray-500">{course.title}</p>
-                    </div>
+                    <Link href={`/${course.id}`} passHref>
+                      <a>
+                        <h2 className="text-2xl font-bold">{course.code}</h2>
+                      </a>
+                    </Link>
+                    <p className="text-gray-500">{course.title}</p>
                   </div>
                 ))
             )}
+            <div className="rounded-xl p-8 w-full border-2 border-dashed border-gray-200 text-center">
+              <h2 className="text-2xl text-gray-400">Add course</h2>
+            </div>
           </div>
         </div>
       </main>

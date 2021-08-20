@@ -41,9 +41,14 @@ const AssessmentPage: NextPage = () => {
               className="rounded-lg border-2 border-gray-200 bg-white"
             />
           ) : (
-            <div>
-              <p>{toPercentage(getTotalWeight(course, assessmentID))}</p>
-              <div className="border-2 border-gray-200 rounded-xl p-4 w-64 flex flex-col items-center">
+            <div className="w-full flex gap-4">
+              <div className="flex-1 border-2 border-gray-200 rounded-xl p-4 flex flex-col items-center">
+                <span>Weight</span>
+                <p className="text-4xl">
+                  {toPercentage(getTotalWeight(course, assessmentID))}
+                </p>
+              </div>
+              <div className="flex-1 border-2 border-gray-200 rounded-xl p-4 flex flex-col items-center">
                 <span>Grade</span>
                 <EditableGrade
                   className="text-4xl"
