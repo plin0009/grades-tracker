@@ -4,6 +4,8 @@ import {
   multiply,
   RationalNumber,
   MaybeRationalNumber,
+  subtract,
+  isNegative,
 } from './RationalNumber'
 
 export interface UserState {
@@ -33,7 +35,7 @@ export interface Assessment {
   name?: string
   childPrefix?: string
   typeIds?: ID[]
-  weight?: RationalNumber
+  weight?: RationalNumber | 'parent'
   grade?: RationalNumber
   parentID?: ID
   childrenIDs?: ID[]
@@ -64,6 +66,26 @@ export const getTotalWeight = (
 ): MaybeRationalNumber => {
   const assessment = course.assessments[assessmentID]
   if (assessment.weight !== undefined) {
+    if (assessment.weight === 'parent') {
+      // weight is the equally-divided portion of unused weight from parents
+      if (assessment.parentID === undefined) return undefined
+      const parent = course.assessments[assessment.parentID]
+      if (parent.weight === undefined) return undefined
+
+      const [siblingWeights, slices] = parent.childrenIDs!.reduce(
+        ([accWeight, slices]: [MaybeRationalNumber, number], childID) => {
+          return course.assessments[childID].weight === 'parent'
+            ? [accWeight, slices + 1]
+            : [add(accWeight, getTotalWeight(course, childID)), slices]
+        },
+        [undefined, 0]
+      )
+      const candidateWeight = divide(
+        subtract(getTotalWeight(course, assessment.parentID), siblingWeights),
+        RationalNumber(slices)
+      )
+      return isNegative(candidateWeight) ? undefined : candidateWeight
+    }
     return assessment.weight
   }
   return assessment.childrenIDs?.reduce(
@@ -71,6 +93,45 @@ export const getTotalWeight = (
       add(accWeight, getTotalWeight(course, childID)),
     undefined
   )
+}
+
+export const getWeight = (course: Course, assessmentID: ID) => {
+  const assessment = course.assessments[assessmentID]
+  if (assessment.weight !== undefined) {
+    if (assessment.weight === 'parent') {
+      // weight is the equally-divided portion of unused weight from parents
+      if (assessment.parentID === undefined) {
+        // TODO: should be an error instead?
+        return undefined
+      }
+      const parent = course.assessments[assessment.parentID]
+      if (parent.weight === undefined) return { parent: undefined }
+
+      const [siblingWeights, slices] = parent.childrenIDs!.reduce(
+        ([accWeight, slices]: [MaybeRationalNumber, number], childID) => {
+          return course.assessments[childID].weight === 'parent'
+            ? [accWeight, slices + 1]
+            : [add(accWeight, getTotalWeight(course, childID)), slices]
+        },
+        [undefined, 0]
+      )
+      const candidateWeight = divide(
+        subtract(getTotalWeight(course, assessment.parentID), siblingWeights),
+        RationalNumber(slices)
+      )
+      return {
+        parent: isNegative(candidateWeight) ? undefined : candidateWeight,
+      }
+    }
+    return { inputted: assessment.weight }
+  }
+  return {
+    auto: assessment.childrenIDs?.reduce(
+      (accWeight: MaybeRationalNumber, childID) =>
+        add(accWeight, getTotalWeight(course, childID)),
+      undefined
+    ),
+  }
 }
 
 // sum of sub-assessments if applicable

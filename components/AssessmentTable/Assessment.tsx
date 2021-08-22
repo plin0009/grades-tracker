@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Weight from 'components/Weight'
 import EditableRationalNumber from 'components/EditableRationalNumber'
 import { UserStateContext } from 'pages/_app'
+import EditableWeight from 'components/EditableWeight'
 
 interface AssessmentProps {
   course: Course
@@ -45,8 +46,10 @@ const WrappedAssessment: React.FC<AssessmentProps> = ({
         </Link>
         <div className="flex-1" />
         <div className="w-16 text-center flex-shrink-0">
-          <EditableRationalNumber
-            value={assessment.weight}
+          <EditableWeight
+            value={
+              assessment.weight === 'parent' ? undefined : assessment.weight
+            }
             setValue={(newValue) =>
               updateData({
                 type: 'updateAssessment',
@@ -59,7 +62,7 @@ const WrappedAssessment: React.FC<AssessmentProps> = ({
             }
           >
             <Weight course={course} assessmentID={assessmentID} />
-          </EditableRationalNumber>
+          </EditableWeight>
         </div>
         <div className="w-16 text-center flex-shrink-0">
           <EditableRationalNumber

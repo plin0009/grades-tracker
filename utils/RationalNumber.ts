@@ -39,6 +39,11 @@ export const toPercentage: (
   )
 }
 
+export const isNegative = (rn: MaybeRationalNumber): boolean => {
+  if (rn === undefined) return false
+  return rn[0] * rn[1] < 0
+}
+
 export const add = (
   rn1: MaybeRationalNumber,
   rn2: MaybeRationalNumber
@@ -46,6 +51,13 @@ export const add = (
   if (rn1 === undefined) return rn2
   if (rn2 === undefined) return rn1
   return RationalNumber(rn1[0] * rn2[1] + rn2[0] * rn1[1], rn1[1] * rn2[1])
+}
+export const subtract = (
+  rn1: MaybeRationalNumber,
+  rn2: MaybeRationalNumber
+): MaybeRationalNumber => {
+  if (rn2 === undefined) return rn1
+  return add(rn1, RationalNumber(-rn2[0], rn2[1]))
 }
 
 export const multiply = (

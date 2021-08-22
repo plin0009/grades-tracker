@@ -35,67 +35,53 @@ const RationalNumberInput: React.FC<RationalNumberInputProps> = ({
   }, [defaultNumeratorInput, defaultDenominatorInput])
   return (
     <>
-      <div
-        className="fixed top-0 bottom-0 left-0 right-0 z-40 bg-gray-900 opacity-10"
-        onClick={closeInput}
-      />
-      <div
-        className={classNames(
-          'border-gray-300 rounded shadow-lg w-56 bg-white z-50',
-          className
-        )}
-      >
-        <div className="flex justify-center items-center my-4 gap-2">
+      <div className="flex justify-center items-center gap-2">
+        <input
+          type="text"
+          className="rounded-lg shadow border-2 border-gray-300 px-4 py-2 w-20 text-center outline-none focus:ring"
+          value={numeratorInput}
+          onChange={(e) => setNumeratorInput(e.target.value.trim())}
+        />
+        <div
+          className={classNames(
+            'flex items-center gap-2 focus-within:opacity-100',
+            {
+              'opacity-20': denominatorInput === '',
+            }
+          )}
+        >
+          <span className="w-4 -mx-2 text-center">{' / '}</span>
           <input
             type="text"
             className="rounded-lg shadow border-2 border-gray-300 px-4 py-2 w-20 text-center outline-none focus:ring"
-            value={numeratorInput}
-            onChange={(e) => setNumeratorInput(e.target.value.trim())}
-          />
-          <div
-            className={classNames(
-              'flex items-center gap-2 focus-within:opacity-100',
-              {
-                'opacity-20': denominatorInput === '',
-              }
-            )}
-          >
-            {' / '}
-            <input
-              type="text"
-              className="rounded-lg shadow border-2 border-gray-300 px-4 py-2 w-20 text-center outline-none focus:ring"
-              value={denominatorInput}
-              onChange={(e) => setDenominatorInput(e.target.value.trim())}
-              placeholder="100"
-            />
-          </div>
-        </div>
-        <div className="justify-evenly flex gap-2 my-4">
-          <BackButton
-            disabled={closeInput === undefined}
-            onClick={closeInput}
-          />
-          <ClearButton
-            disabled={numeratorInput === '' && denominatorInput === ''}
-            onClick={() => {
-              setNumeratorInput('')
-              setDenominatorInput('')
-            }}
-          />
-          <ApproveButton
-            disabled={!canSave}
-            onClick={() => {
-              if (!canSave || numeratorInput === '') {
-                setValue(undefined)
-                return
-              }
-              const numerator = +numeratorInput
-              const denominator =
-                +denominatorInput === 0 ? 100 : +denominatorInput
-              setValue(RationalNumber(numerator, denominator))
-            }}
+            value={denominatorInput}
+            onChange={(e) => setDenominatorInput(e.target.value.trim())}
+            placeholder="100"
           />
         </div>
+      </div>
+      <div className="m-auto w-44 justify-between flex gap-2 mt-4">
+        <BackButton disabled={closeInput === undefined} onClick={closeInput} />
+        <ClearButton
+          disabled={numeratorInput === '' && denominatorInput === ''}
+          onClick={() => {
+            setNumeratorInput('')
+            setDenominatorInput('')
+          }}
+        />
+        <ApproveButton
+          disabled={!canSave}
+          onClick={() => {
+            if (!canSave || numeratorInput === '') {
+              setValue(undefined)
+              return
+            }
+            const numerator = +numeratorInput
+            const denominator =
+              +denominatorInput === 0 ? 100 : +denominatorInput
+            setValue(RationalNumber(numerator, denominator))
+          }}
+        />
       </div>
     </>
   )

@@ -2,7 +2,7 @@ import { UserSave } from 'utils/loadsave'
 import { PercentRationalNumber } from 'utils/RationalNumber'
 
 export const testSave: UserSave = {
-  courseIDs: ['0'],
+  courseIDs: ['0', '1'],
   courses: {
     '0': {
       id: '0',
@@ -68,6 +68,106 @@ export const testSave: UserSave = {
           name: 'Final Project',
           weight: PercentRationalNumber(30),
           parentID: 'root',
+        },
+      },
+      types: {},
+    },
+    '1': {
+      id: '1',
+      code: 'CS 245',
+      title: 'Logic and Computation',
+      properties: {},
+      assessments: {
+        root: {
+          id: 'root',
+          childrenIDs: ['0', '1', '2', '3'],
+        },
+        '0': {
+          id: '0',
+          name: 'Assignments',
+          childPrefix: 'A',
+          weight: PercentRationalNumber(40),
+          parentID: 'root',
+          childrenIDs: [
+            'a1',
+            'a2',
+            'a3',
+            'a4',
+            'a5',
+            'a6',
+            'a7',
+            'a8',
+            'a9',
+            'a10',
+          ],
+        },
+        '1': {
+          id: '1',
+          name: 'Midterm',
+          weight: PercentRationalNumber(20),
+          parentID: 'root',
+        },
+        '2': {
+          id: '2',
+          name: 'Final',
+          weight: PercentRationalNumber(35),
+          parentID: 'root',
+        },
+        '3': {
+          id: '3',
+          name: 'LEARN Quizzes',
+          weight: PercentRationalNumber(5),
+          parentID: 'root',
+        },
+        a1: {
+          id: 'a1',
+          weight: 'parent',
+          parentID: '0',
+        },
+        a2: {
+          id: 'a2',
+          weight: 'parent',
+          parentID: '0',
+        },
+        a3: {
+          id: 'a3',
+          weight: 'parent',
+          parentID: '0',
+        },
+        a4: {
+          id: 'a4',
+          weight: 'parent',
+          parentID: '0',
+        },
+        a5: {
+          id: 'a5',
+          weight: 'parent',
+          parentID: '0',
+        },
+        a6: {
+          id: 'a6',
+          weight: 'parent',
+          parentID: '0',
+        },
+        a7: {
+          id: 'a7',
+          weight: 'parent',
+          parentID: '0',
+        },
+        a8: {
+          id: 'a8',
+          weight: 'parent',
+          parentID: '0',
+        },
+        a9: {
+          id: 'a9',
+          weight: 'parent',
+          parentID: '0',
+        },
+        a10: {
+          id: 'a10',
+          weight: 'parent',
+          parentID: '0',
         },
       },
       types: {},
