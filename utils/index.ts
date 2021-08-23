@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import {
   add,
   divide,
@@ -20,7 +21,6 @@ export interface Course {
   code: string
   title: string
   properties: { [key: string]: string }
-  //rootAssessmentIDs: ID[]
   assessments: { root: Assessment; [key: string]: Assessment }
   types: { [key: string]: AssessmentType }
 }
@@ -39,7 +39,13 @@ export interface Assessment {
   grade?: RationalNumber
   parentID?: ID
   childrenIDs?: ID[]
-  // TODO: due dates
+  // due dates
+  dueDate?: Date
+}
+
+export interface Date {
+  timestamp: number // unix timestamp (s)
+  time?: boolean // whether or not the time matters
 }
 
 export const getAssessmentName = (course: Course, assessmentID: ID): string => {
@@ -215,4 +221,40 @@ export const getPathIDs = (course: Course, assessmentID: ID): ID[] => {
     currentID = assessment.parentID!
   }
   return pathIDs
+}
+
+export type Day = number // [number, number, number]
+
+export const dateToDayjs = (date: Date): dayjs.Dayjs =>
+  dayjs.unix(date.timestamp)
+export const dayjsToDay = (dayjsDate: dayjs.Dayjs): Day =>
+  dayjsDate.startOf('day').unix()
+export const dateToDay = (date: Date): Day => dayjsToDay(dateToDayjs(date))
+export const dayToDayjs = (day: Day): dayjs.Dayjs => dayjs.unix(day)
+export const dayjsToDate = (dayjsDate: dayjs.Dayjs): Date => ({
+  timestamp: dayjsDate.unix(),
+})
+export const dayToDate = (day: Day): Date => dayjsToDate(dayToDayjs(day))
+
+export const getDaysToAssessments = (
+  course: Course,
+  assessmentID: ID
+): Map<Day, ID[]> => {
+  const assessment = course.assessments[assessmentID]
+  const map = new Map()
+  if (assessment.dueDate !== undefined) {
+    const day = dateToDay(assessment.dueDate)
+    if (!map.has(day)) map.set(day, [])
+    map.get(day).push(assessmentID)
+    //map.set(day, [...map.get(day), assessmentID])
+  }
+  assessment.childrenIDs?.forEach((childID) => {
+    getDaysToAssessments(course, childID).forEach((childIDs, day) => {
+      if (!map.has(day)) map.set(day, [])
+      childIDs.forEach((id) => map.get(day).push(id))
+      //childIDs.forEach((id) => map.set(day, [...map.get(day), id]))
+    })
+  })
+  //console.log(map)
+  return map
 }

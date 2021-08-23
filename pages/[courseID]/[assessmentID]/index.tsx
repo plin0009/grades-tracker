@@ -10,6 +10,9 @@ import EditableRationalNumber from 'components/EditableRationalNumber'
 import EditableText from 'components/EditableText'
 import Grade from 'components/Grade'
 import Weight from 'components/Weight'
+import EditableWeight from 'components/EditableWeight'
+import dayjs from 'dayjs'
+import AssessmentCalendar from 'components/AssessmentCalendar'
 
 const AssessmentPage: NextPage = () => {
   const router = useRouter()
@@ -46,16 +49,19 @@ const AssessmentPage: NextPage = () => {
           </div>
           {assessment.childrenIDs !== undefined &&
           assessment.childrenIDs.length > 0 ? (
-            <AssessmentTable
-              course={course}
-              assessmentID={assessmentID}
-              className="rounded-lg border-2 border-gray-200 bg-white"
-            />
+            <>
+              <AssessmentTable
+                course={course}
+                assessmentID={assessmentID}
+                className="rounded-lg border-2 border-gray-200 bg-white"
+              />
+              <AssessmentCalendar course={course} assessmentID={assessmentID} />
+            </>
           ) : (
             <div className="w-full flex gap-4">
               <div className="flex-1 border-2 border-gray-200 rounded-xl p-4 flex flex-col items-center">
                 <span>Weight</span>
-                <EditableRationalNumber
+                <EditableWeight
                   value={assessment.weight}
                   setValue={(newValue) =>
                     updateData({
@@ -73,7 +79,7 @@ const AssessmentPage: NextPage = () => {
                     course={course}
                     assessmentID={assessmentID}
                   />
-                </EditableRationalNumber>
+                </EditableWeight>
               </div>
               <div className="flex-1 border-2 border-gray-200 rounded-xl p-4 flex flex-col items-center">
                 <span>Grade</span>
@@ -97,6 +103,19 @@ const AssessmentPage: NextPage = () => {
                     backup="average"
                   />
                 </EditableRationalNumber>
+              </div>
+              <div className="flex-1 border-2 border-gray-200 rounded-xl p-4 flex flex-col items-center">
+                <span>Due Date</span>
+                {assessment.dueDate !== undefined ? (
+                  <p className="text-2xl">
+                    {dayjs(assessment.dueDate?.timestamp).format('MMM D')}
+                    {assessment.dueDate?.time
+                      ? dayjs(assessment.dueDate.timestamp).format(' h:mm A')
+                      : ''}
+                  </p>
+                ) : (
+                  <p className="text-4xl text-gray-300">{'N/A'}</p>
+                )}
               </div>
             </div>
           )}

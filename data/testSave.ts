@@ -123,11 +123,18 @@ export const testSave: UserSave = {
           id: 'a1',
           weight: 'parent',
           parentID: '0',
+          dueDate: {
+            timestamp: 1630555140,
+            time: true,
+          },
         },
         a2: {
           id: 'a2',
           weight: 'parent',
           parentID: '0',
+          dueDate: {
+            timestamp: 1631073600,
+          },
         },
         a3: {
           id: 'a3',
