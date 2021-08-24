@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import AssessmentTable from 'components/AssessmentTable'
 import Header from 'components/Header'
 import { UserStateContext } from 'pages/_app'
-import { getAssessmentName } from 'utils'
+import { dateToDayjs, getAssessmentName } from 'utils'
 import Breadcrumbs from 'components/Breadcrumbs'
 import EditableRationalNumber from 'components/EditableRationalNumber'
 import EditableText from 'components/EditableText'
@@ -108,9 +108,9 @@ const AssessmentPage: NextPage = () => {
                 <span>Due Date</span>
                 {assessment.dueDate !== undefined ? (
                   <p className="text-2xl">
-                    {dayjs(assessment.dueDate?.timestamp).format('MMM D')}
+                    {dateToDayjs(assessment.dueDate).format('MMM D')}
                     {assessment.dueDate?.time
-                      ? dayjs(assessment.dueDate.timestamp).format(' h:mm A')
+                      ? dateToDayjs(assessment.dueDate).format(' h:mm A')
                       : ''}
                   </p>
                 ) : (
